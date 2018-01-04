@@ -1,1 +1,1 @@
-eval "$(docker-machine env Char)"
+env $(docker-machine env Char | grep export | sed 's/export //g' | xargs) bash

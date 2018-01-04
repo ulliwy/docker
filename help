@@ -193,6 +193,8 @@ If any of these points are not met, this part is counted wrong and you move to t
  No
 BYOTSS
 
+docker run -it -p 10011:10011 -p 9987:9987/udp -p 30033:30033 -p 41144:41144 ex01
+
 Build this dockerfile then run it. 
 It must appear in the background. 
 You can easily connect with a classic TeamSpeak client on it (take it on the MSC if it 
