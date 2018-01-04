@@ -1,0 +1,234 @@
+Preliminaries
+Preliminary instructions
+
+Before you begin, be sure to check the following: 
+- There is indeed a repo (in the cloned git), respecting the subject 
+- No cheating, the student must be able to explain the typed commands. 
+
+If an item in this list is not met, the rating stops there. 
+Use the appropriate flag. You are encouraged to debate on the submission, 
+but the scale should not be applied.
+
+ Yes
+ No
+Setting up the working environment
+
+Verify that the following instructions work correctly (run the necessary commands) 
+
+- The "docker version" command displays the docker and docker-machine version 
+- Virtualbox is installed on the machine 
+- A symbolic link to run the .docker and VirtualBox VMs files points to the home.
+
+ Yes
+ No
+How to Docker
+Before you begin
+
+This part is to evaluate the first part of the subject. 
+For optimization questions, you will note the output by running the commands in the subject. 
+
+For each command, you will have to execute it via your shell by running `` cat 01` , $(cat 01) or even copy paste the command of the exercise in question. 
+
+Make sure you start fresh by removing the Char virtual machine if it already exists.
+
+ Yes
+ No
+docker-machine (01-03)
+
+Make sure that: 
+  - 01: A virtual machine Char has been created with the virtualbox driver (docker-machine ls) 
+
+  - 02: You should have posted something like 192.168.99.xxx 
+
+  - 03: The command "env" in your shell displays 4 variables "DOCKER_ *". 
+  On the other hand, no command to assign environment variable must be present in the script, otherwise it is zero and end of the correction. 
+
+  If any of these points are not met, this part is counted wrong
+
+ Yes
+ No
+My first container (04-09)
+
+Make sure that: 
+
+  - 04: hello-world image is made by making a docker images (without errors) 
+
+  - 05: A greeting message is displayed on the terminal. 
+
+  - 06: Once the container is launched, check that: 
+    * The container is called overlord (docker ps) 
+    * Port 80 of the container is well binded to port 5000 of the virtual machine (docker ps) 
+    * The command "curl http://:5000" returns the HTML corresponding to nginx 
+    * The "docker inspect -f" {{.HostConfig.RestartPolicy}} "overlord" command returns {always ..} 
+
+  - 07: An IP address of the form "172.X.0.X" appears (verifiable with an inspect docker) 
+
+  - 08: Once the Alpine container is launched, check that: 
+    * You are prompted "/ #" 
+    * A whoami on this console gives you "root". 
+    * An "exit" leaves the container 
+    * A ps -a docker does not find any trace of an alpine container. 
+
+  - 09: Once the debian container is launched, check that: 
+    * You are prompted "root @ hostname: / #" 
+    * The execution of the commands given in the file executes. 
+    * You have the option of making a "git clone https://github.com/docker/docker.git" 
+    * A small program in C should be compileable and executable in the context of the container (install vim if necessary) 
+    * A ps -a docker does not find any trace of a debian container. 
+
+    If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+Wordpress (10-18)
+
+Make sure that: 
+  - 10-11: the volume "hatchery" is created, and that the 11 command shows you a "hatchery" volume in addition to the others 
+
+  - 12-13: Once the mysql container is launched: 
+    * You get back on your classic shell (only the digest of the container launched appears) 
+    * Command 13 shows that MYSQL_ROOT_PASSWORD is set to "Kerrigan" and that MYSQL_DATABASE is set to "zerglings" 
+    * A "docker inspect spawning-pool" shows you that a "hatchery" volume is mounted on the destination "/var/lib/mysql" (Key "Mounts"). 
+    * The "docker inspect -f "{{.HostConfig.RestartPolicy}}" spawning-pool" command returns {on-failure ..} 
+    * The command "docker exec -it spawning-pool mysql -uroot -p" asks you to enter a password 
+    * The password is "Kerrigan" and the command prompt mysql is visible 
+    * The SQL command "show databases" shows a database "zerglings" 
+
+  - 14: Once the wordpress container is launched: 
+    * You come back to your classic shell (only the digest of the container launched appears) 
+    * You can launch a browser and go to http://:8080, and configure Wordpress so that the db used is that of spawning-pool 
+    * Install Wordpress and verify that the app is properly installed 
+
+  - 15: Once the container phpmyadmin launched: 
+    * You come back on your classic shell (only the digest of the container launched appears) 
+    * You can launch a browser and go to http://:8081 
+    * You can access the available database on spawning-pool and verify that you have created wordpress tables 
+
+  - 16: Logs of the mysql container are displayed live 
+
+  - 17: It talks about him 
+
+  - 18: "overlord" is displayed on the terminal 
+
+  If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+Abathur (19)
+
+Perform all the exercise commands in order to set up the container. 
+The container must embed the Flask framework (pip install Flask). 
+A python script must be present in the shared folder between the host and the container. 
+Launch this script from the context of the container, 
+So go to http://:3000 will display Hello World title. 
+Similarly, logs must appear on the terminal. 
+
+If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+The Swarm (20-30)
+
+Make sure that: 
+- 20: a "docker node ls" displays Char in the HOSTNAME and its MANAGER STATUS is Leader 
+
+- 21: same response as with question 01. 
+
+- 22: "docker node ls" displays Aiur in HOSTNAME and its MANAGER STATUS is other than Leader 
+
+23: the command 23 operates and makes the 2 nodes appear. 
+
+- 24-25: once the rabbitmq service is launched: 
+  * Command 25 displays the "orbital-command" service in 1 replicates to 1 in replicate mode on a rabbitmq image: latest 
+  * A "docker service ps orbital-command" shows you the service in status "Running" 
+  * "docker service inspect -f "{{.Spec.TaskTemplate.ContainerSpec.Env}}" orbital-command" gives you two environment variables that set a user and a specific password 
+
+- 26-27: once the engineering-bay service has been launched: 
+  * A "docker service ps engineering-bay" displays well the services in status "Running" with 2 replicas of made 
+  * "Docker service inspect -f "{{.Spec.TaskTemplate.ContainerSpec.Env}}" engineering-bay" gives you two environment variables that set a user and a password to connect to the orbital-command service 
+  * The command `27` makes you scroll the logs of the 2 tasks of the service ... and shows you many zergs attacking orbital-command 
+
+- 28-29: once the marine service launched: 
+  * A "docker service ps marines" displays well the services in status "Running" with 2 replicas of made 
+  * A "docker service inspect -f" {{.Spec.TaskTemplate.ContainerSpec.Env}} "marines" gives you two environment variables that set a user and a password that allow connection to the orbital-command service 
+  * A "docker service logs marines" show well that marines are in the process of pouching Zerg 
+
+- 30: a "docker service ps marines" shows the services in status "Running" with 20 replicas made. The service itself is not stopped, but updated. 
+
+If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+Viscera Cleanup Detail (31-34)
+
+All commands in this part must each be one line. (Check with the mighty wc -l) 
+
+Make sure that: 
+
+- 31: a "docker service ls" no longer displays any service independently 
+
+- 32: a "docker ps -a" no longer displays any container independently 
+
+- 33: a "docker images ls" no longer displays any image 
+
+- 34: "docker-machine ls" no longer displays the virtual machine Aiur 
+
+If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+DockerFiles
+This part allows you to evaluate the second part of the subject. You will have to build each Dockerfile and evaluate the correct implementation of the application You need to start fresh. Either you make a virtual machine, or you use Docker for Mac, your choice. The important thing is that a `docker ps -a' in the terminal shows you absolutely nothing.
+
+Vim // Emacs
+
+Build this dockerfile then run it. 
+Vim or emacs must start, and the publisher's "explorer" mode must show you that you are 
+In the context of the container and not your host. 
+Make the necessary tests. 
+
+If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+BYOTSS
+
+Build this dockerfile then run it. 
+It must appear in the background. 
+You can easily connect with a classic TeamSpeak client on it (take it on the MSC if it 
+Not installed) 
+
+If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+Dockerfile in a Dockerfile... in a Dockerfile ?
+
+Build the dockerfile and push it somewhere (hub docker, local registry ...). 
+Take advantage of this moment to create a blank Rails application in the directory (take a 
+Ruby Container and do the necessary). 
+Copy the dockerfile of the subject, try to build and launch the container with the necessary (postage, detach mode ...). 
+Verify that you can access the Rails application by attempting to access the machine's IP through the exposed port. 
+
+If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+Salade Tomates Oignons
+
+Build the dockerfile and launch it with the necessary (harbor exhibit, detach mode ...). 
+Make sure that Gogs is available, that you can create rests on it and that you can push as much in HTTPS 
+Than SSH. 
+
+If any of these points are not met, this part is counted wrong and you move to the next one
+
+ Yes
+ No
+BONUS
+Bonuses must be assessed if and only if the Mandatory part is PERFECT. By PERFECT, we mean the mandatory is fully realized and it is not possible to find an error. Concretely, this means that if the mandatory part did not get ALL points during this defense, the bonuses must be Completely IGNORED.
+
+🎵 I feel it coming... I feel it coming... I feel it coming... I feel it coming... 🎵
+
+It is up to you to evaluate the different dockerfiles of the `02_bonus` folder. 
+
+The allocation of the points is at the discretion of the corrector.
